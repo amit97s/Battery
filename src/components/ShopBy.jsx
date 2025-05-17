@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import suVastika from '../assets/suvastik.png';
+// import suVastika from '../assets/suvastik.png';
 import luminous from '../assets/lumious.png';
 import microtech from '../assets/microtech.png';
 import exide from '../assets/excide.jpeg';
@@ -19,7 +19,7 @@ const ShopBy = () => {
   const [showAll, setShowAll] = useState(false);
 
   const manufacturers = [
-    { name: 'Su-vastika', logo: suvastika },
+    // { name: 'Su-vastika', logo: suvastika },
     { name: 'Luminous', logo: luminous },
     { name: 'Microtek', logo: microtech },
     { name: 'Exide', logo: exide },
