@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { slider1, slider2, slider3, slider4, slider5 } from "../assets";
-
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [step, setStep] = useState(1);
@@ -9,7 +9,14 @@ const Slider = () => {
   const [priceRange, setPriceRange] = useState({ min: 1000, max: 100000 });
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const slides = [slider1, slider2, slider3, slider4, slider5];
+  // Sample image URLs from Pexels (replace with your actual image URLs)
+  const slides = [
+    slider1, // Solar panels
+   slider2, // Batteries
+    slider3, // Power systems
+    slider4, // UPS
+    slider5, // Electronics
+  ];
   
   const products = ["Inverter", "UPS", "Batteries", "Solar Products", "Stabilizers", "Battery Water"];
   const companies = ["Microtech", "Luminous", "Dynax", "Livfast", "Exide", "Sukam", "Amaron", "MTech", "Okaya"];
@@ -37,26 +44,43 @@ const Slider = () => {
     }
   };
 
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
   const handleFindProducts = () => {
     setIsProcessing(true);
     setTimeout(() => {
       setIsProcessing(false);
+      // Here you would handle the product search results display
+      alert(`Finding ${selectedProduct} from ${selectedCompanies.join(", ")} between ₹${priceRange.min} - ₹${priceRange.max}`);
     }, 2000);
   };
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
   return (
-    <div className="h-[600px] bg-white flex overflow-hidden rounded-xl shadow-lg">
-      <div className="w-1/3 px-8 py-5 bg-gradient-to-br from-blue-50 to-white">
-        <div className="h-full flex flex-col">
-          <div className="flex-grow-0">
+    <div className="mx-auto max-w-7xl w-full bg-white flex flex-col md:flex-row overflow-hidden rounded-xl shadow-lg">
+      {/* Form Section */}
+      <div className="w-full md:w-1/3 px-4 sm:px-6 py-4 bg-gradient-to-br from-blue-50 to-white">
+        <div className="flex flex-col h-full">
+          <div className="flex-grow lg:flex-none">
             {step === 1 && (
-              <div className="space-y-2 animate-fadeIn">
+              <div className="space-y-3 animate-fadeIn">
                 <h3 className="text-lg font-semibold text-gray-700 mb-3">What are you looking for?</h3>
-                <div className="space-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {products.map((product) => (
                     <label
                       key={product}
-                      className={`flex items-center px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                      className={`flex items-center px-3 py-3 rounded-lg cursor-pointer transition-all duration-200 ${
                         selectedProduct === product
                           ? "bg-blue-50 border-blue-500 border-2"
                           : "border border-gray-200 hover:border-blue-300"
@@ -70,7 +94,7 @@ const Slider = () => {
                         onChange={(e) => setSelectedProduct(e.target.value)}
                         className="hidden"
                       />
-                      <div className={`w-4 h-4 rounded-full border-2 mr-3 transition-all duration-200 ${
+                      <div className={`w-5 h-5 rounded-full border-2 mr-3 transition-all duration-200 ${
                         selectedProduct === product
                           ? "border-blue-500 bg-blue-500"
                           : "border-gray-300"
@@ -87,11 +111,11 @@ const Slider = () => {
                 <h3 className="text-lg font-semibold text-gray-700 mb-2">
                   Which {selectedProduct} companies interest you?
                 </h3>
-                <div className="space-y-2 max-h-[350px] overflow-y-auto custom-scrollbar">
+                <div className="space-y-2 max-h-[350px] overflow-y-auto custom-scrollbar pr-1">
                   {companies.map((company) => (
                     <label
                       key={company}
-                      className={`flex items-center p-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                      className={`flex items-center p-3 rounded-lg cursor-pointer transition-all duration-200 ${
                         selectedCompanies.includes(company)
                           ? "bg-blue-50 border-blue-500 border-2"
                           : "border border-gray-200 hover:border-blue-300"
@@ -103,7 +127,7 @@ const Slider = () => {
                         onChange={() => handleCompanyToggle(company)}
                         className="hidden"
                       />
-                      <div className={`w-4 h-4 rounded border-2 mr-3 transition-all duration-200 ${
+                      <div className={`w-5 h-5 rounded border-2 mr-3 transition-all duration-200 ${
                         selectedCompanies.includes(company)
                           ? "border-blue-500 bg-blue-500"
                           : "border-gray-300"
@@ -116,42 +140,65 @@ const Slider = () => {
             )}
 
             {step === 3 && (
-              <div className="space-y-4 animate-fadeIn">
+              <div className="space-y-5 animate-fadeIn">
                 <h3 className="text-lg font-semibold text-gray-700 mb-3">What's your budget?</h3>
                 <div className="space-y-6">
-                  <div className="space-y-2">
-                    <input
-                      type="range"
-                      min="1000"
-                      max="100000"
-                      value={priceRange.min}
-                      onChange={(e) => setPriceRange(prev => ({ ...prev, min: parseInt(e.target.value) }))}
-                      className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer"
-                    />
-                    <input
-                      type="range"
-                      min="1000"
-                      max="100000"
-                      value={priceRange.max}
-                      onChange={(e) => setPriceRange(prev => ({ ...prev, max: parseInt(e.target.value) }))}
-                      className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer"
-                    />
+                  <div className="space-y-8">
+                    <div className="space-y-1">
+                      <label className="text-sm text-gray-600">Minimum Price: ₹{priceRange.min.toLocaleString()}</label>
+                      <input
+                        type="range"
+                        min="1000"
+                        max="100000"
+                        step="1000"
+                        value={priceRange.min}
+                        onChange={(e) => setPriceRange(prev => ({ 
+                          ...prev, 
+                          min: Math.min(parseInt(e.target.value), priceRange.max - 1000) 
+                        }))}
+                        className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm text-gray-600">Maximum Price: ₹{priceRange.max.toLocaleString()}</label>
+                      <input
+                        type="range"
+                        min="1000"
+                        max="100000"
+                        step="1000"
+                        value={priceRange.max}
+                        onChange={(e) => setPriceRange(prev => ({ 
+                          ...prev, 
+                          max: Math.max(parseInt(e.target.value), priceRange.min + 1000) 
+                        }))}
+                        className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer"
+                      />
+                    </div>
                   </div>
-                  <div className="flex justify-between text-gray-600">
-                    <span>₹{priceRange.min.toLocaleString()}</span>
-                    <span>₹{priceRange.max.toLocaleString()}</span>
+                  <div className="flex justify-between text-sm text-gray-600 font-medium">
+                    <span>₹1,000</span>
+                    <span>₹100,000</span>
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="mt-4">
+          <div className="mt-6 flex space-x-3">
+            {step > 1 && (
+              <button
+                onClick={handleBack}
+                className="flex-none px-4 py-3 rounded-lg font-medium transition-all duration-200 bg-gray-100 text-gray-700 hover:bg-gray-200"
+              >
+                Back
+              </button>
+            )}
+            
             {step < 3 && (
               <button
                 onClick={handleNext}
                 disabled={step === 1 ? !selectedProduct : selectedCompanies.length === 0}
-                className={`w-full py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-[1.02] ${
+                className={`flex-grow py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] ${
                   (step === 1 && selectedProduct) || (step === 2 && selectedCompanies.length > 0)
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -160,11 +207,12 @@ const Slider = () => {
                 Next
               </button>
             )}
+            
             {step === 3 && (
               <button
                 onClick={handleFindProducts}
                 disabled={isProcessing}
-                className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transform hover:scale-[1.02] transition-all duration-200"
+                className="flex-grow bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transform hover:scale-[1.02] transition-all duration-200"
               >
                 {isProcessing ? (
                   <span className="flex items-center justify-center">
@@ -180,7 +228,8 @@ const Slider = () => {
         </div>
       </div>
 
-      <div className="w-2/3 relative overflow-hidden">
+      {/* Image Slider Section */}
+      <div className="w-full md:w-2/3 relative overflow-hidden min-h-[300px] sm:min-h-[400px] md:min-h-[500px]">
         <div 
           className="flex transition-transform duration-500 ease-out h-full"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -190,19 +239,38 @@ const Slider = () => {
               key={index}
               src={slide}
               alt={`Slide ${index + 1}`}
-              className="min-w-full h-full object-cover"
+              className="min-w-full h-96 sm:h-full object-cover"
             />
           ))}
         </div>
         
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {/* Navigation arrows */}
+        <button 
+          onClick={prevSlide}
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-sm p-1.5 rounded-full text-white hover:bg-white/50 transition-all"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        
+        <button 
+          onClick={nextSlide}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/30 backdrop-blur-sm p-1.5 rounded-full text-white hover:bg-white/50 transition-all"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={24} />
+        </button>
+        
+        {/* Slide indicators */}
+        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                currentSlide === index ? 'bg-white w-8' : 'bg-white/50'
+                currentSlide === index ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/70'
               }`}
+              aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>

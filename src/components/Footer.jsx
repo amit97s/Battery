@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="mb-20">
           <h3 className="text-2xl font-bold mb-4">Stay Connected</h3>
           <p className="text-gray-400 text-lg mb-6">Sign up for our newsletter - get updates, offers & expert tips</p>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <input
               type="email"
               placeholder="Email address"
