@@ -2,14 +2,14 @@ import {BatteryStoreSection, BestSelling, Footer, Header, Parallex, ShopBy, Slid
 const Home = () => {
   return (
     <div>
-        <Header/>
+        {/* <Header/> */}
         <Slider/>
         <ShopBy/>
         <BestSelling/>
         <Parallex/>
         <Whyus/>
 <BatteryStoreSection/>
-<Footer/>
+{/* <Footer/> */}
 
 
     </div>

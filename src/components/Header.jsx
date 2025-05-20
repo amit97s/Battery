@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { LogIn, UserPlus, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
 import { logo } from "../assets";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,10 +13,12 @@ const Header = () => {
   return (
     <div className="sticky top-0 z-50 w-full">
       <div className="flex items-center justify-end bg-blue-600 py-2 px-4 sm:px-6 lg:px-8 gap-2 sm:gap-3">
+        <Link to={'/log-in'}>
         <button className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 bg-blue-700 text-white text-sm font-medium hover:bg-blue-800 transition-all duration-300 shadow-sm rounded-md">
           <LogIn size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
           <span>Login</span>
         </button>
+        </Link>
         <button className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 bg-white text-gray-800 text-sm font-medium hover:bg-gray-100 transition-all duration-300 shadow-sm rounded-md">
           <UserPlus size={16} />
           <span>Register</span>
@@ -26,14 +29,16 @@ const Header = () => {
         </button>
       </div>
       <header className="shadow-md bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden h-20">
           <div className="flex items-center justify-between">
             <div className="flex-shrink-0">
+              <Link to={'/'}>
               <img 
                 src={logo} 
                 alt="Logo" 
-                className="h-16 object-contain transition-all duration-300 hover:opacity-90" 
+                className="h-24 object-contain transition-all duration-300 hover:opacity-90" 
               />
+              </Link>
             </div>
             <div className="flex md:hidden">
               <button 
@@ -45,11 +50,11 @@ const Header = () => {
             </div>
             <nav className="hidden md:block">
               <ul className="flex space-x-14 text-gray-700 font-medium">
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">Home</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">About Us</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">Contact Us</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">Coming Soon</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">Help</li>
+                <Link to={'/'} className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">Home</Link>
+                <Link to={'/about'} className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">About Us</Link>
+                <Link to={'/contact-us'} className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">Contact Us</Link>
+                <Link to={''} className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">Coming Soon</Link>
+                <Link to={'/help'} className="hover:text-blue-600 transition-colors duration-300 cursor-pointer relative after:absolute after:bottom-[-4px] after:left-0 after:h-0.5 after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full">Help</Link>
               </ul>
             </nav>
           </div>
